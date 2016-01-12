@@ -18,8 +18,9 @@ module SlackGamebot
           created_by: winner,
           challengers: [winner],
           challenged: [loser],
-          state: ::ChallengeState::ACCEPTED
+          state: ::ChallengeState::PROPOSED
         )
+        challenge.accept!(loser)
         challenge.lose!(loser)
 
         client.say(channel: data.channel, text: "Got it. #{winner} #{verbs.sample} #{loser}", gif: 'noted')
