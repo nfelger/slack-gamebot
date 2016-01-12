@@ -12,7 +12,7 @@ module SlackGamebot
 
         winner = ::User.find_by_slack_mention!(client.team, arguments[0])
         loser = ::User.find_by_slack_mention!(client.team, arguments[2])
-        ::Challenge.create!(
+        challenge = ::Challenge.create!(
           team: client.team,
           channel: data.channel,
           created_by: winner,
@@ -23,7 +23,7 @@ module SlackGamebot
         challenge.accept!(loser)
         challenge.lose!(loser)
 
-        client.say(channel: data.channel, text: "Got it. #{winner} #{verbs.sample} #{loser}", gif: 'noted')
+        client.say(channel: data.channel, text: "Got it. #{winner} #{verbs.sample} #{loser}.", gif: 'noted')
         logger.info "record: #{data.user} - #{arguments}"
       end
     end
