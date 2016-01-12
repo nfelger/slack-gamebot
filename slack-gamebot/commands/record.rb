@@ -12,13 +12,13 @@ module SlackGamebot
 
         winner = ::User.find_by_slack_mention!(client.team, arguments[0])
         loser = ::User.find_by_slack_mention!(client.team, arguments[2])
-        Challenge.create!(
+        ::Challenge.create!(
           team: client.team,
           channel: data.channel,
           created_by: winner,
           challengers: [winner],
           challenged: [loser],
-          state: ChallengeState::ACCEPTED
+          state: ::ChallengeState::ACCEPTED
         )
         challenge.lose!(loser)
 
